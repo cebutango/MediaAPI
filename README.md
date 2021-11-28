@@ -33,3 +33,15 @@ defined('MEDIA_INTEGRATION_TOKEN')  OR define('MEDIA_INTEGRATION_TOKEN', '22522d
 
 OK
 
+## Library should be independent. Receive Integration Token on construct method as a parameter
+
+```
+public function __construct($params) {
+    $this->integration_token = $params['token'];
+}
+```
+$this->load->library('mediumapi', array('token'=>MEDIA_INTEGRATION_TOKEN));
+```
+
+```
+
