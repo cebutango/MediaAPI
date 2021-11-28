@@ -3,15 +3,17 @@
 class MediumAPI {
 
     private $api_endpoint = "https://api.medium.com/v1";
+    private $integration_token = "";
 
-    public function __construct() {
+    public function __construct($params) {
+        $this->integration_token = $params['token'];
     }
 
     public function getProfile() {
         $api = $this->api_endpoint . "/me";
         $headers = array(
             "Accept: application/json",
-            "Authorization: Bearer " . MEDIA_INTEGRATION_TOKEN,
+            "Authorization: Bearer " . $this->integration_token,
         );
         $ch = curl_init($api);
         curl_setopt($ch, CURLOPT_URL, $api);
@@ -38,12 +40,12 @@ class MediumAPI {
             $headers = array(
                 "Content-Type: application/json",
                 "Accept: application/json",
-                "Authorization: Bearer " . MEDIA_INTEGRATION_TOKEN,
+                "Authorization: Bearer " . $this->integration_token,
             );
             $postdata = array();
             $postdata['title'] = $title;
-            $postdata['contentFormat'] = "html";
             $postdata['content'] = $content;
+            $postdata['contentFormat'] = "html";
             $postdata['publishStatus'] = "draft";         
             $ch = curl_init($api);
             curl_setopt($ch, CURLOPT_URL, $api);
@@ -70,13 +72,12 @@ class MediumAPI {
             $data = $profile->data;
             $profile_id = $data->id;
         }  
-        print_r($profile);
         
         if (!empty($profile_id)) {
             $api = $this->api_endpoint . "/users/".$profile_id."/publications";
             $headers = array(
                 "Content-Type: application/x-www-form-urlencoded",
-                "Authorization: Bearer " . MEDIA_INTEGRATION_TOKEN,
+                "Authorization: Bearer " . $this->integration_token,
             );
             $ch = curl_init($api);
             curl_setopt($ch, CURLOPT_URL, $api);
