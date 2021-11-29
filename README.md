@@ -1,4 +1,4 @@
-# test-case
+# MediaAPI
 
 ## Create a library to interact with Medium REST API using Integration Tokens.
 
